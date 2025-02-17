@@ -1,0 +1,45 @@
+start X1V
+place I1R 2 X1V
+place I1V 6 X1V
+place E1R 1 I1R
+place E1V 6 I1V
+print
+place S2R 1 E1R
+pass
+print
+place S1R 6 S2R
+place X1R 6 E1R
+place A1V 6 E1V
+print
+place S1R 6 S2R
+move A1V 0 A1R
+pass
+move X1R 5 S1R
+pass
+place A1R 6 X1R
+pass
+move A1R 5 X1R
+move A1V 0 A1R
+print
+pass
+move A1V 1 I1V
+pass
+move A1V 3 I1R
+move A1V 1 X1V
+pass
+place S1V 5 I1V
+pass
+move S1V 2 E1R
+print
+place E2R 1 S1R
+pass
+move E2R 1 S2R 1 S1V 2 S1V
+move S1V 5 X1V
+pass
+move E1R 4 X1V
+move X1R 1 A1V
+print
+pass
+move A1R 2 E1V
+move I1V 4 E1V 5 E1V 6 E1V 1 E1V 1 A1R
+quit
