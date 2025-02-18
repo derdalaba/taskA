@@ -1,5 +1,6 @@
 package views.terminal;
 
+import model.interaction.ModelInterface;
 import views.terminal.command.Command;
 
 import java.util.Map;
@@ -22,8 +23,10 @@ public class CommandHandler {
     private static final String PASS_COMMAND = "pass";
     private boolean running;
     private Map<String, Command> commands;
+    private ModelInterface model;
 
-    CommandHandler() {
+    public CommandHandler(ModelInterface model) {
+        this.model = model;
         initCommands();
     }
 
@@ -39,13 +42,13 @@ public class CommandHandler {
     private void initCommands() {
         commands = Map.of(
                 QUIT_COMMAND, new QuitCommand(this),
-                LOAD_COMMAND, new LoadCommand(),
-                COMPETITION_COMMAND, new CompetitionCommand(),
-                SHOW_COMMAND, new ShowCommand(),
-                SHOW_MONSTERS_COMMAND, new ShowMonstersCommand(),
-                SHOW_ACTIONS_COMMAND, new ShowActionsCommand(),
-                ACTION_COMMAND, new ActionCommand(),
-                PASS_COMMAND, new PassCommand()
+                LOAD_COMMAND, new LoadCommand(this.model),
+                COMPETITION_COMMAND, new CompetitionCommand(this.model),
+                SHOW_COMMAND, new ShowCommand(this.model),
+                SHOW_MONSTERS_COMMAND, new ShowMonstersCommand(this.model),
+                SHOW_ACTIONS_COMMAND, new ShowActionsCommand(this.model),
+                ACTION_COMMAND, new ActionCommand(this.model),
+                PASS_COMMAND, new PassCommand(this.model)
         );
     }
     private void runHandler() {

@@ -6,6 +6,8 @@ package model.data;
  * @param atk The attack of the monster. This affects the damage dealt by the monster.
  * @param def The defense of the monster. This affects the damage taken by the monster.
  * @param spd The speed of the monster. This affects the order of the monster's turn in combat.
+ *
+ * @author uepiy
  */
 
 public record BaseState(int maxHealth, int atk, int def, int spd) {
