@@ -1,4 +1,4 @@
-package model.data;
+package model.data.action;
 
 public enum ActionType {
     DAMAGE,

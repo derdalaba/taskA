@@ -1,12 +1,12 @@
-package model.data;
+package model.data.action;
 
 public class Action {
     private final String name;
-    private final ActionType type;
+    private final Effect effect;
 
-    public Action(String name, ActionType type) {
+    public Action(String name, Effect effect) {
         this.name = name;
-        this.type = type;
+        this.effect = effect;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package model.data;
 
-import model.interaction.ModelInterface;
+import model.data.monster.Monster;
 
 import java.util.List;
 

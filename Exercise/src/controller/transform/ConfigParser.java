@@ -1,11 +1,18 @@
 package controller.transform;
 
 import model.Model;
-import model.data.Action;
-import model.data.Monster;
+import model.data.action.Action;
+import model.data.action.Effect;
+import model.data.monster.Monster;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Parses pre-checked lists of strings into a Model object.
+ * takes two lists of strings, one for actions and one for monsters, and parses them into a Model object.
+ * @author uepiy
+ */
 
 public final class ConfigParser {
     private static final String  SEPARATOR = " ";
@@ -28,46 +35,52 @@ public final class ConfigParser {
 
     private ConfigParser() {
     }
-    private static String getFirstWord(String line) {
-        return line.trim().split(SEPARATOR)[0];
-    }
-
-    private static List<String> getActionLines(List<String> config) {
-        List<String> actionLines = new ArrayList<>();
-        int i = 0;
-        while (i < config.size() && !getFirstWord(config.get(i)).startsWith(MONSTER_SECTION_START)) {
-            actionLines.add(config.get(i));
-            i++;
-        }
-        return actionLines;
-    }
-    private static List<String> getMonsterLines(List<String> config) {
-        int i = 0;
-        while (i < config.size() && !getFirstWord(config.get(i)).startsWith(MONSTER_SECTION_START)) {
-            i++;
-        }
-        return config.subList(i, config.size());
-    }
-    private static List<Action> parseActions(List<String> actionLines) {
-        List<Action> actions = new ArrayList<>();
+    private static List<List<String>> createSublist(List<String> actionLines, String start, String end) {
         List<List<String>> actionLinesList = new ArrayList<>();
+        int i = 0;
         while (!actionLines.isEmpty()) {
             if (actionLines.get(0).isBlank()) {
                 actionLines.remove(0);
                 continue;
             }
-            //TODO: split action lines into separate lists. Create a new Action from each list.
+            if (actionLines.get(0).matches(start)) {
+                actionLinesList.add(new ArrayList<>());
+                actionLines.remove(0);
+                continue;
+            }
+            if (actionLines.get(0).matches(end)) {
+                actionLines.remove(0);
+                i++;
+                continue;
+            }
+            actionLinesList.get(i).add(actionLines.get(0));
+            actionLines.remove(0);
         }
-
+        return actionLinesList;
+    }
+    private static String[] getActionHead(String actionLine) {
+        String[] actionHead = actionLine.split(SEPARATOR);
+        return new String[]{actionHead[0], actionHead[1]};
+    }
+    private static List<Action> createActions(List<List<String>> actionLinesList) {
+        List<Action> actions = new ArrayList<>();
+        //TODO: parse action
+        for (List<String> actionLines : actionLinesList) {
+            String[] actionHead = getActionHead(actionLines.get(0));
+            Effect effect = new Effect(getEffect(actionLines.get(1)));
+            actions.add(new Action(actionHead[0], effect));
+        }
         return actions;
     }
-    public static Model parseConfig(List<String> config) {
-        if (config == null) {
-            throw new IllegalArgumentException("Config cannot be null");
-        }
+    private static List<Action> parseActions(List<String> actionLines) {
+        List<List<String>> actionLinesList = createSublist(actionLines, ACTION_SECTION_START, ACTION_SECTION_END);
 
-        List<Action> actions = parseActions(getActionLines(config));
-        List<Monster> monsters = parseMonsters(getMonsterLines(config));
+        return createActions(actionLinesList);
+    }
+    public static Model parseConfig(List<List<String>> actionLines, List<String> monsterLines) {
+
+        List<Action> actions = createActions(actionLines);
+        List<Monster> monsters = parseMonsters(monsterLines);
 
         return new Model(monsters, actions);
     }
