@@ -1,12 +1,16 @@
 package model.data.action;
 
+import model.data.action.effect.Effect;
+
+import java.util.List;
+
 public class Action {
     private final String name;
-    private final Effect effect;
+    private final List<Effect> effectMap;
 
-    public Action(String name, Effect effect) {
+    public Action(String name, List<Effect> effectMap) {
         this.name = name;
-        this.effect = effect;
+        this.effectMap = effectMap;
     }
 
     @Override
