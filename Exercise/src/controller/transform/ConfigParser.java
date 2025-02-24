@@ -2,8 +2,7 @@ package controller.transform;
 
 import model.Model;
 import model.data.action.Action;
-import model.data.action.effect.DamageEffect;
-import model.data.action.effect.Effect;
+import model.data.action.effect.*;
 import model.data.monster.Monster;
 
 import java.util.ArrayList;
@@ -28,6 +27,7 @@ public final class ConfigParser {
     private static final String EFFECT_HEAL = "heal";
     private static final String EFFECT_REPEAT = "repeat";
     private static final String EFFECT_CONTINUE = "continue";
+    private static final int FIRST_ELEMENT = 0;
 
     private static final String STRENGTH = "(base [0-9]+|rel 1?[0-9]{1,2}|abs [0-9]+)";
 
@@ -46,41 +46,37 @@ public final class ConfigParser {
         List<List<String>> actionLinesList = new ArrayList<>();
         int i = 0;
         while (!actionLines.isEmpty()) {
-            if (actionLines.get(0).isBlank()) {
-                actionLines.remove(0);
+            if (actionLines.get(FIRST_ELEMENT).isBlank()) {
+                actionLines.remove(FIRST_ELEMENT);
                 continue;
             }
-            if (actionLines.get(0).matches(start)) {
+            if (actionLines.get(FIRST_ELEMENT).matches(start)) {
                 actionLinesList.add(new ArrayList<>());
-                actionLines.remove(0);
+                actionLines.remove(FIRST_ELEMENT);
                 continue;
             }
-            if (actionLines.get(0).matches(end)) {
-                actionLines.remove(0);
+            if (actionLines.get(FIRST_ELEMENT).matches(end)) {
+                actionLines.remove(FIRST_ELEMENT);
                 i++;
                 continue;
             }
-            actionLinesList.get(i).add(actionLines.get(0));
-            actionLines.remove(0);
+            actionLinesList.get(i).add(actionLines.get(FIRST_ELEMENT));
+            actionLines.remove(FIRST_ELEMENT);
         }
         return actionLinesList;
     }
-    private static String[] getActionHead(String actionLine) {
-        String[] actionHead = actionLine.split(SEPARATOR);
-        return new String[]{actionHead[0], actionHead[1]};
-    }
+
     private static List<Action> createActions(List<List<String>> actionLinesList) {
         List<Action> actions = new ArrayList<>();
-        //TODO: parse action
+        //TODO: refactor
 
         for (List<String> actionLines : actionLinesList) {
-            String[] actionHead = getActionHead(actionLines.get(0));
             List<String> effectLines = actionLines.subList(1, actionLines.size());
             List<Effect> effects = new ArrayList<>();
             for (String effect : effectLines) {
                 effects.add(parseEffect(effect));
             }
-            actions.add(new Action(actionHead[0], effects));
+            actions.add(new Action(actionLines.get(FIRST_ELEMENT), effects));
         }
         return actions;
     }
