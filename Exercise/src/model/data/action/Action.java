@@ -13,14 +13,10 @@ public class Action {
     private final Type type;
     private final List<Effect> effectList;
 
-    public Action(String head, List<Effect> effectList) {
-        String[] headParts = head.split(ARGUMENT_SEPARATOR);
-        this.type = parseType(headParts[TYPE_INDEX]);
-        this.name = headParts[NAME_INDEX];
+    public Action(String name, String type, List<Effect> effectList) {
+        this.type = Type.valueOf(type);
+        this.name = name;
         this.effectList = effectList;
-    }
-    private Type parseType(String type) {
-        return Type.valueOf(type.toUpperCase());
     }
 
     @Override
