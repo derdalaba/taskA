@@ -18,4 +18,9 @@ public class StatusChange implements HitRateEffect {
     public boolean isHit() {
         return false;
     }
+
+    @Override
+    public int getHitRate() {
+        return hitRate;
+    }
 }

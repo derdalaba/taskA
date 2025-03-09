@@ -1,6 +1,10 @@
 package model.interaction;
 
+import model.Model;
 import model.data.CombatState;
+import views.terminal.exceptions.MonstersNotFoundException;
+
+import java.util.List;
 
 
 /**
@@ -10,9 +14,16 @@ import model.data.CombatState;
  */
 
 public class ModelInterface {
-    private CombatState combatState;
+    private Model model;
 
-    public ModelInterface(CombatState combatState) {
-        this.combatState = combatState;
+    public ModelInterface(Model model) {
+        this.model = model;
+    }
+    public void replaceModel(Model model) {
+        this.model = model;
+    }
+    public int startCompetition(List<String> monsterNames) throws MonstersNotFoundException {
+        model.startCompetition(monsterNames);
+        return monsterNames.size();
     }
 }

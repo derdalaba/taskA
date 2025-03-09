@@ -13,6 +13,10 @@ public class HealEffect implements HitRateEffect {
         this.hitRate = Integer.parseInt(effectParameters.get(2));
     }
     @Override
+    public int getHitRate() {
+        return hitRate;
+    }
+    @Override
     public boolean isHit() {
         return false;
     }

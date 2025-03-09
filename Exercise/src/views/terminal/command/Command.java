@@ -8,9 +8,13 @@ import model.interaction.ModelInterface;
  */
 public interface Command {
     /**
+     * For commands that do not return a message.
+     */
+    String NO_MESSAGE = "";
+    /**
      * This method executes the command on the combat model.
      * @param args The arguments passed to the command.
      * @return The result to be displayed to the user based on the model's state.
      */
-    CommandResult execute(String[] args, ModelInterface model);
+    CommandResult execute(String[] args);
 }

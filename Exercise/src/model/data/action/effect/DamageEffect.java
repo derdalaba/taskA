@@ -14,7 +14,16 @@ public class DamageEffect implements HitRateEffect {
         this.strength = Integer.parseInt(effect.get(2));
         this.hitRate = Integer.parseInt(effect.get(3));
     }
-
+    public StrengthType getStrengthType() {
+        return strengthType;
+    }
+    public int getStrength() {
+        return strength;
+    }
+    @Override
+    public int getHitRate() {
+        return hitRate;
+    }
     @Override
     public boolean isHit() {
         return false;

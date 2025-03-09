@@ -22,4 +22,5 @@ public interface Effect {
             default -> throw new IllegalArgumentException("Invalid strength type: " + strengthType);
         };
     }
+    int getHitRate();
 }

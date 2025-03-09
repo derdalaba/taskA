@@ -1,13 +1,13 @@
 package model.data.shared;
 
 /**
- * Enum class for the states a monster can be in.
+ * Enum class for the state condition a monster can be in.
  * The states are WET, BURN, QUICKSAND, and SLEEP.
  * The states can end in each round by a chance of 1/3.
  * @author uepiy
  */
 
-public enum State {
+public enum StateCondition {
     /**
      * The normal state of a monster.
      */

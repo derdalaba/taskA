@@ -1,7 +1,7 @@
 package views.terminal;
 
 import model.interaction.ModelInterface;
-import views.terminal.command.Command;
+import views.terminal.command.*;
 
 import java.util.Map;
 
@@ -23,11 +23,18 @@ public class CommandHandler {
     private static final String PASS_COMMAND = "pass";
     private boolean running;
     private Map<String, Command> commands;
-    private ModelInterface model;
+    private final ModelInterface model;
 
-    public CommandHandler(ModelInterface model) {
+    public CommandHandler(ModelInterface model, boolean debug) {
         this.model = model;
-        initCommands();
+        if (debug) {
+            initDebugCommands();
+            System.out.println("Debug mode enabled");
+        } else {
+            initCommands();
+            System.out.println("Debug mode disabled");
+        }
+
     }
 
     public void start() {
@@ -47,6 +54,7 @@ public class CommandHandler {
                 SHOW_COMMAND, new ShowCommand(this.model),
                 SHOW_MONSTERS_COMMAND, new ShowMonstersCommand(this.model),
                 SHOW_ACTIONS_COMMAND, new ShowActionsCommand(this.model),
+                SHOW_STATS_COMMAND, new ShowStatsCommand(this.model),
                 ACTION_COMMAND, new ActionCommand(this.model),
                 PASS_COMMAND, new PassCommand(this.model)
         );

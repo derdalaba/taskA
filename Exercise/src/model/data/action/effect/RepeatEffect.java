@@ -10,4 +10,12 @@ public class RepeatEffect implements Effect {
         this.count = count;
         this.effects = effects;
     }
+    public Effect getFirstEffect() {
+        return effects.get(0);
+    }
+
+    @Override
+    public int getHitRate() {
+        return effects.get(0).getHitRate();
+    }
 }
